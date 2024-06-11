@@ -11,6 +11,6 @@ export class ApiService extends HttpClient {
       email,
       password,
     };
-    return this.post('http://localhost:4200/api/login', body);
+    return this.post('http://localhost:9200/api/auth/login', body);
   }
 }

@@ -38,26 +38,18 @@ export class LoginComponent {
   validateForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
-    remember: FormControl<boolean>;
   }> = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    remember: [true],
   });
 
   submitForm(): void {
     if (this.validateForm.valid) {
       console.log('submit', this.validateForm.value);
-      this.loginservice
-        .login(this.validateForm.value.email, this.validateForm.value.password)
-        .subscribe(
-          (data: any) => {
-            this.records = data;
-          },
-          (error: any) => {
-            console.log(error);
-          }
-        );
+      this.loginservice.login(
+        this.validateForm.value.email,
+        this.validateForm.value.password
+      );
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {

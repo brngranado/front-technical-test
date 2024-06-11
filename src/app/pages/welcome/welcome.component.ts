@@ -3,6 +3,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   imports: [CommonModule, NzIconModule, NzLayoutModule, NzMenuModule],
   selector: 'app-welcome',
@@ -12,7 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class WelcomeComponent implements OnInit {
   isCollapsed = false;
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!sessionStorage.getItem('token')) {
+      this.router.navigate(['/login']);
+    }
+  }
 }
