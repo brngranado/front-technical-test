@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { RouterLink } from '@angular/router';
+import { LoginService } from '../services/login.service';
 import {
   FormControl,
   FormGroup,
@@ -34,16 +35,20 @@ export class RegisterComponent {
   validateForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
-    repeat: FormControl<string>;
+    name: FormControl<string>;
   }> = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    repeat: ['', [Validators.required]],
+    name: ['', [Validators.required]],
   });
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      this.loginservice.signOut({
+        email: this.validateForm.value.email || '',
+        password: this.validateForm.value.password || '',
+        name: this.validateForm.value.name,
+      });
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {
@@ -54,5 +59,8 @@ export class RegisterComponent {
     }
   }
 
-  constructor(private fb: NonNullableFormBuilder) {}
+  constructor(
+    @Inject(LoginService) private loginservice: LoginService,
+    private fb: NonNullableFormBuilder
+  ) {}
 }
