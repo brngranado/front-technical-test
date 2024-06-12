@@ -4,8 +4,15 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TodoComponent } from '../todo/todo.component';
 @Component({
-  imports: [CommonModule, NzIconModule, NzLayoutModule, NzMenuModule],
+  imports: [
+    CommonModule,
+    NzIconModule,
+    NzLayoutModule,
+    NzMenuModule,
+    TodoComponent,
+  ],
   selector: 'app-welcome',
   standalone: true,
   templateUrl: './welcome.component.html',
