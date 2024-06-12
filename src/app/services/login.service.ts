@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
+import { IUser } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,19 @@ export class LoginService {
   login(email: any, password: any) {
     this.apiservice.login(email, password).subscribe((data) => {
       console.log('token', data);
+      this.token = data.token;
+      sessionStorage.setItem('token', this.token);
+
+      if (sessionStorage.getItem('token')) {
+        this.router.navigate(['/welcome']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  signOut(body: IUser) {
+    this.apiservice.register(body).subscribe((data) => {
       this.token = data.token;
       sessionStorage.setItem('token', this.token);
 
